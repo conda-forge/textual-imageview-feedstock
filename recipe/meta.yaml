@@ -6,23 +6,23 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/textual_imageview-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/textual_imageview-{{ version }}.tar.gz
   sha256: 4299d8ed677db0adb8fe945687470cf1421dcafd2a5dddab54b6ee8ef2ab3320
 
 build:
   noarch: python
-  number: 0
+  number: 1
   entry_points:
     - vimg = textual_imageview.app:vimg
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
 
 requirements:
   host:
-    - python >=3.7
+    - python {{ python_min }}
     - pip
     - hatchling
   run:
-    - python >=3.7
+    - python >={{ python_min }}
     - pillow >=9.4.0
     - rich >=13.0.0
     - textual >=0.9.1
@@ -30,6 +30,7 @@ requirements:
 test:
   requires:
     - pip
+    - python {{ python_min }}
   commands:
     - pip check
     - vimg --version
